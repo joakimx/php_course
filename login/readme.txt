@@ -1,0 +1,3 @@
+1. Write a php page called cookies that will ask user for cookie name/value, and also other information and store them into $_COOKIE autoglobal
+
+2. Write a php page (login.php) with a login form. The form uses database table: users that has username and password to authenticate user input. If incorrect data is entered, it gives an error message. If authenticated successfully- user is taken to a page that shows protected contents (protectedstuff.php). The login form also has a link called 'Forgotten password', which takes user to a page called forgot.php which has a form with email field. If the emaila address exists in the database, it grabs password hint from the database and sends it to that valid email.
