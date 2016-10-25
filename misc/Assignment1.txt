@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Enter Credit Card Number</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" 
+/>
+</head>
+<body>
+<h2>Enter Credit Card Number (Must be numeric, 15 to 16 characters)</h2>
+<form name="ccard" action="creditcard.php" 
+     method="post">
+<p>Credit Card: <input type="text" name="cardnum" /></p>
+<p><input type="reset" value="Clear Form" />&nbsp; 
+     &nbsp;<input type="submit" name="Submit" 
+     value="Validate" /></p>
+</form>
+</body>
+</html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Your Paycheck Data</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<?php
+$cardNum = $_POST['cardnum'];
+//Strip dashes and spaces from the string 
+$cardNum = str_replace('-', '', $cardNum);
+$cardNum = str_replace(' ', '', $cardNum);
+
+//check to see if sting is numeric and contains credit card number
+if (is_numeric($cardNum) && (count($cardNum) == 15) || (count($cardNum 
+== 16)))	{
+echo "Your credit card number seems to be valid!";
+	}	else	{
+echo "your credit card number isn't numeric, or not of valid length of 15-16 characters!";
+
+	}
+
+?>
+</body>
+</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Bowler Registration</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"
+/>
+</head>
+<body>
+
+<?php
+
+$CounterFile = "hitcount.txt";
+
+//Open text file containing number of hits
+$handle = fopen("$CounterFile", "r");
+
+//Get current number of hits
+$hits = fread($handle, 8192);
+
+//Close file
+fclose($handle);
+
+//Add +1 to the existing count
+$hits = $hits + 1;
+
+//Display number of hits to html page
+echo "<p>Page views: " .$hits ."</p>";
+
+//Open file to add in the new count
+$handle = fopen("$CounterFile", "w");
+
+//Write new count
+fwrite($handle, $hits);
+
+//Close file
+fclose($handle);
+?>
+
+</body>
+</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Bowler Registration</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" 
+/>
+</head>
+<body>
+<h2>Bowler Registration Page</h2>
+<form name="registration" action="bowlers.php" 
+     method="post">
+<p>Name: 	<input type="text" name="name" /></p>
+<p>Age: 	<input type="text" name="age" /></p>
+<p>Bowling Average:<input type="text" name="average" /></p>
+<p><input type="reset" value="Clear Form" />&nbsp; 
+     &nbsp;<input type="submit" name="Submit" 
+     value="Register Now" /></p>
+</form>
+<?php
+include("hits.php");
+?>
+</body>
+</html>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<hgtml xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Your Registration Data</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<?php
+
+//Set up variables
+$name = $_POST['name'];
+$age = $_POST['age'];
+$average = $_POST['average'];
+
+//Create file handle & open file for writing and appending
+$file = fopen("info.txt", "a") or die("Couldn't open file for writing");
+$string = "$name ,$age, $average";
+
+//Write to file
+if (fwrite($file, $string ."\n")) {
+	echo "Content successfully added!";
+	print "<br><br>";
+	echo "Here is the updated content of the file info.txt:";
+	print "<br><br>";
+	//close file 
+	fclose($file);
+
+	fopen("info.txt", "r");
+	//Display content
+	$content = file("info.txt");
+	$newstring = implode("<br>", $content);
+	echo $newstring;
+
+
+
+
+		}
+else {
+
+	echo "Something went wrong..couldn\'t write to file!";
+
+	}
+
+?>
+
+
+</body>
+</html>
